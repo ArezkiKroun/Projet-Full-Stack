@@ -1,0 +1,9 @@
+sudo docker run --name shop-db -e POSTGRES_PASSWORD=shop -e POSTGRES_USER=shop -e POSTGRES_DB=shop_db -p 5432:5432 -d postgres
+
+sudo docker start shop-db
+
+# import data
+ sudo docker exec -i shop-db /bin/bash -c "PGPASSWORD=shop pg_dump --username shop shop_db" > shop.sql
+
+# restore data
+docker exec -i shop-db /bin/bash -c "PGPASSWORD=shop psql --username shop database_name" < /path/on/your/machine/shop.sql
