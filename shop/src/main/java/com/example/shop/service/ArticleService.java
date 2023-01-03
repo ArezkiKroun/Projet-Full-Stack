@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,34 @@ public class ArticleService {
         return articleRepos.findAll();
     }
 
+    public List<Article> getAllArticlesFree(){
+
+        List<Shop> shops = shopRepos.findAll();
+        List<Article> allArticles = articleRepos.findAll();
+        List<Article> articlesAssignedById;
+        List<Article> diffArticles = new ArrayList<Article>();
+
+        if(! allArticles.isEmpty() ){
+            diffArticles.addAll(allArticles);
+
+            if(!shops.isEmpty()){
+                for (Shop shop: shops
+                ) {
+                    articlesAssignedById = articleRepos.findShopArticlesByShopsId(shop.getId());
+                    if(!articlesAssignedById.isEmpty()){
+                        diffArticles.removeAll(articlesAssignedById);
+                    }
+
+
+                }
+
+            }
+
+
+        }
+
+        return diffArticles;
+    }
     public Article getArticlesById(Long artId){
 
         Article article = articleRepos.findById(artId)

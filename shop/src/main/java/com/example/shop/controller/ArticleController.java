@@ -32,6 +32,10 @@ public class ArticleController {
         return new ResponseEntity<List<Article>>(articleService.getAllArticles(), HttpStatus.OK);
     }
 
+    @GetMapping("/articles/notAssigned")
+    public ResponseEntity<List<Article>> getAllArticlesFree(@RequestHeader HttpHeaders header, Pageable pageable) {
+        return new ResponseEntity<List<Article>>(articleService.getAllArticlesFree(), HttpStatus.OK);
+    }
 
 
     @GetMapping("/articles/{artId}")
