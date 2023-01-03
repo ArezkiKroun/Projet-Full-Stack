@@ -37,7 +37,7 @@ export default function ViewUser() {
   }, []);
 
   const loadArticle = async () => {
-    const result = await axios.get("http://localhost:8888/articles");
+    const result = await axios.get("http://localhost:8888/articles/notAssigned");
     setArticle(result.data);
   //  console.log(result.data)
   };
